@@ -58,4 +58,18 @@ defmodule Rumbl.Accounts do
   defp verify_pass(user, _pass_valid = true), do: {:ok, user}
   defp verify_pass(_user, _pass_valid), do: {:error, :unauthorized}
 
+
+  def solution(arr) do
+      for x <- 1..length(arr),
+          y <- 1..length(arr) - x,
+          z <- 1..length(arr) - x - y,
+          x != 0, y != 0, z != 0,
+          x + y + z == length(arr),
+          {xs, x_rem} = Enum.split(arr, x),
+          {ys, zs} = Enum.split(x_rem, y),
+          Enum.sum(xs) <= Enum.sum(ys),
+          Enum.sum(ys) <= Enum.sum(zs),
+          do: {xs, ys, zs}
+  end
+
 end
